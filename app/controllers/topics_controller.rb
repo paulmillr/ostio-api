@@ -13,7 +13,6 @@ class TopicsController < ApplicationController
   # GET /topics/1
   # GET /topics/1.json
   def show
-    puts 1, params
     @topic = @repo.topics.find_by_number!(params[:id])
   end
 
