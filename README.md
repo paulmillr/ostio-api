@@ -2,7 +2,23 @@
 Your open-source talks place. Backend part.
 
 ## Getting started
-This is a backend part of 
+This is a backend part of [ost.io](http://ost.io/) application.
+
+Ostio api is built with [Rails](http://rubyonrails.org/).
+
+## API
+`GET`, `POST`, `PUT` / `PATCH` and `DELETE` are available to these resources.
+
+```
+/users/
+/users/:username
+/users/:username/repos
+/users/:username/repos/:repo_name
+/users/:username/repos/:repo_name/topics
+/users/:username/repos/:repo_name/topics/:topic_number
+/users/:username/repos/:repo_name/topics/:topic_number/posts
+/users/:username/repos/:repo_name/topics/:topic_number/posts/:id
+```
 
 ## License
 The MIT License (MIT)
