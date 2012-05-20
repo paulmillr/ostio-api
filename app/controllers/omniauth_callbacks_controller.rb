@@ -21,8 +21,6 @@ class OmniauthCallbacksController < ApplicationController
       return render status: 500, json: {error: 'GitHub returned invalid data for the user id'}
     end
 
-    puts 'MEH!', params
-
     if user_signed_in?
       redirect_to controller: 'users', action: 'show_current'
     else
