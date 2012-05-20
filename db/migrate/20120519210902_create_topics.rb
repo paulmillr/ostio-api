@@ -4,8 +4,6 @@ class CreateTopics < ActiveRecord::Migration
       t.integer :repo_id, null: false
       t.integer :number, null: false
       t.string :title, null: false
-      t.datetime :created_at
-      t.datetime :updated_at
 
       t.timestamps
     end

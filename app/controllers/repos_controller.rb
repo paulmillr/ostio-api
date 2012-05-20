@@ -15,14 +15,6 @@ class ReposController < ApplicationController
     @repo = @user.repos.find_by_name!(params[:id])
   end
 
-  # GET /repos/new
-  # GET /repos/new.json
-  def new
-    @repo = Repo.new
-
-    render json: @repo
-  end
-
   # POST /repos
   # POST /repos.json
   def create

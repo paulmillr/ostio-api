@@ -1,23 +1,4 @@
 ---
-users:
-  columns:
-  - id
-  - email
-  - login
-  - gravatar_id
-  - type
-  - created_at
-  - updated_at
-  records: 
-  - - 1
-    - paul@paulmillr.com
-    - paulmillr
-    - d342e4ef045c54a6a6f41d070d8a0406
-    - User
-    - 2012-05-20 00:00:00.000000000 Z
-    - 2012-05-20 00:00:00.000000000 Z
-
----
 repos:
   columns:
   - id
@@ -92,5 +73,11 @@ posts:
     - 1
     - 1
     - yay!
+    - 2012-05-20 00:00:00.000000000 Z
+    - 2012-05-20 00:00:00.000000000 Z
+  - - 4
+    - 3
+    - 1
+    - Hello, chaplin!
     - 2012-05-20 00:00:00.000000000 Z
     - 2012-05-20 00:00:00.000000000 Z

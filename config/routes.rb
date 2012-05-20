@@ -1,8 +1,9 @@
 Ostio::Application.routes.draw do
-  devise_for :users
 
-  match '/auth/:service/callback' => 'services#create'
-  # resources :services, only: [:index, :create]
+  # resources :sessions
+  match '/auth/github/callback' => 'omniauth_callbacks#github'
+  match '/users/me' => 'users#show_current'
+  devise_for :users, only: []
   resources :users, only: [:show] do
     resources :repos, except: :edit do
       resources :topics, except: :edit do

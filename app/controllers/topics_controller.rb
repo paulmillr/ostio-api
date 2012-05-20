@@ -16,14 +16,6 @@ class TopicsController < ApplicationController
     @topic = @repo.topics.find_by_number!(params[:id])
   end
 
-  # GET /topics/new
-  # GET /topics/new.json
-  def new
-    @topic = Topic.new
-
-    render json: @topic
-  end
-
   # POST /topics
   # POST /topics.json
   def create

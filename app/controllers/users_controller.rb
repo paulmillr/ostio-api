@@ -11,12 +11,8 @@ class UsersController < ApplicationController
     @user = User.find_by_login!(params[:id])
   end
 
-  # GET /users/new
-  # GET /users/new.json
-  def new
-    @user = User.new
-
-    render json: @user
+  def show_current
+    render json: current_user
   end
 
   # POST /users

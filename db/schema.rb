@@ -45,15 +45,19 @@ ActiveRecord::Schema.define(:version => 20120520134218) do
   add_index "topics", ["repo_id"], :name => "topics_repo_id_fk"
 
   create_table "users", :force => true do |t|
-    t.string   "email",       :default => "", :null => false
+    t.string   "email",                :default => "", :null => false
     t.string   "login"
+    t.string   "authentication_token"
+    t.string   "name"
     t.string   "gravatar_id"
     t.string   "type"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.string   "github_id"
+    t.string   "github_token"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["email"], :name => "index_users_on_email"
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
 
   add_foreign_key "posts", "topics", :name => "posts_topic_id_fk"
