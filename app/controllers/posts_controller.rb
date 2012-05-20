@@ -11,6 +11,9 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @user = User.find_by_login!(params[:user_id])
+    @repo = @user.repos.find_by_name!(params[:repo_id])
+    @topic = @repo.topics.find_by_number!(params[:topic_id])
     @post = Post.find(params[:id])
   end
 
