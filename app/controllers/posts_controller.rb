@@ -1,10 +1,15 @@
 class PostsController < ApplicationController
   before_filter :check_sign_in, except: [:index, :show]
+  before_filter :check_permissions, except: [:index, :create, :show]
 
   before_filter do
     @user = User.find_by_login!(params[:user_id])
     @repo = @user.repos.find_by_name!(params[:repo_id])
     @topic = @repo.topics.find_by_number!(params[:topic_id])
+  end
+
+  def check_permissions
+    not_authorized unless current_user == @user or current_user == @post.user
   end
 
   # GET /posts
@@ -22,7 +27,7 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(params[:post])
+    @post = Post.new(params[:post].merge({user: current_user}))
 
     if @post.save
       render json: @post, status: :created, location: @post

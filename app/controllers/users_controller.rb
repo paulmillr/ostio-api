@@ -1,5 +1,10 @@
 class UsersController < ApplicationController
-  before_filter :check_sign_in, except: [:show]
+  before_filter :check_sign_in, except: [:index, :show]
+  before_filter :check_permissions, except: [:index, :show, :show_current]
+
+  def check_permissions
+    not_authorized unless current_user == @user
+  end
 
   # GET /users/1
   # GET /users/1.json

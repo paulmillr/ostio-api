@@ -1,9 +1,14 @@
 class TopicsController < ApplicationController
   before_filter :check_sign_in, except: [:index, :show]
+  before_filter :check_permissions, except: [:index, :create, :show]
 
   before_filter do
     @user = User.find_by_login!(params[:user_id])
     @repo = @user.repos.find_by_name!(params[:repo_id])
+  end
+
+  def check_permissions
+    not_authorized unless current_user == @user or current_user == @topic.user
   end
 
   # GET /topics
@@ -21,7 +26,7 @@ class TopicsController < ApplicationController
   # POST /topics
   # POST /topics.json
   def create
-    @topic = Topic.new(params[:topic])
+    @topic = Topic.new(params[:topic].merge({user: current_user}))
 
     if @topic.save
       render json: @topic, status: :created, location: @topic

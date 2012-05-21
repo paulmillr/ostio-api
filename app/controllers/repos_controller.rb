@@ -1,8 +1,13 @@
 class ReposController < ApplicationController
   before_filter :check_sign_in, except: [:index, :show]
+  before_filter :check_permissions, except: [:index, :show]
 
   before_filter do
     @user = User.find_by_login!(params[:user_id])
+  end
+
+  def check_permissions
+    not_authorized unless current_user == @user
   end
 
   # GET /repos
@@ -20,8 +25,7 @@ class ReposController < ApplicationController
   # POST /repos
   # POST /repos.json
   def create
-    params[:repo].merge!(user: @user)
-    @repo = Repo.new(params[:repo])
+    @repo = Repo.new(params[:repo].merge({user: current_user}))
 
     if @repo.save
       render json: @repo, status: :created, location: @repo
