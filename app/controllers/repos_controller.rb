@@ -1,4 +1,6 @@
 class ReposController < ApplicationController
+  before_filter :check_sign_in, except: [:index, :show]
+
   before_filter do
     @user = User.find_by_login!(params[:user_id])
   end

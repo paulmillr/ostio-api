@@ -1,9 +1,5 @@
 class UsersController < ApplicationController
-  # GET /users
-  # GET /users.json
-  def index
-    @users = User.all
-  end
+  before_filter :check_sign_in, except: [:show]
 
   # GET /users/1
   # GET /users/1.json
@@ -13,18 +9,6 @@ class UsersController < ApplicationController
 
   def show_current
     render json: current_user
-  end
-
-  # POST /users
-  # POST /users.json
-  def create
-    @user = User.new(params[:user])
-
-    if @user.save
-      render json: @user, status: :created, location: @user
-    else
-      render json: @user.errors, status: :unprocessable_entity
-    end
   end
 
   # PATCH/PUT /users/1
