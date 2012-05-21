@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20120520134218) do
 
   create_table "topics", :force => true do |t|
     t.integer  "repo_id",    :null => false
+    t.integer  "user_id",    :null => false
     t.integer  "number",     :null => false
     t.string   "title",      :null => false
     t.datetime "created_at", :null => false
@@ -43,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20120520134218) do
 
   add_index "topics", ["number"], :name => "index_topics_on_number"
   add_index "topics", ["repo_id"], :name => "topics_repo_id_fk"
+  add_index "topics", ["user_id"], :name => "topics_user_id_fk"
 
   create_table "users", :force => true do |t|
     t.string   "email",                :default => "", :null => false
@@ -66,5 +68,6 @@ ActiveRecord::Schema.define(:version => 20120520134218) do
   add_foreign_key "repos", "users", :name => "repos_user_id_fk"
 
   add_foreign_key "topics", "repos", :name => "topics_repo_id_fk"
+  add_foreign_key "topics", "users", :name => "topics_user_id_fk"
 
 end

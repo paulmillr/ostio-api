@@ -1,8 +1,9 @@
 class ReposController < ApplicationController
   before_filter :check_sign_in, except: [:index, :show]
+  before_filter :load_parents
   before_filter :check_permissions, except: [:index, :show]
 
-  before_filter do
+  def load_parents
     @user = User.find_by_login!(params[:user_id])
   end
 
