@@ -9,9 +9,9 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :login, :email, :github_id, :github_token, :name, :gravatar_id, :type
 
-  has_many :services, dependent: :destroy
-  has_many :posts, dependent: :destroy
   has_many :repos, dependent: :destroy
+  has_many :topics, dependent: :destroy
+  has_many :posts, dependent: :destroy
 
   validates :login, length: {maximum: 40}
   validates :name, length: {maximum: 40}

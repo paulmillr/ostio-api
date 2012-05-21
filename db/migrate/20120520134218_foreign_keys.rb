@@ -2,6 +2,7 @@ class ForeignKeys < ActiveRecord::Migration
   def change
     change_table :topics do |t|
       t.foreign_key :repos
+      t.foreign_key :users
     end
 
     change_table :repos do |t|
