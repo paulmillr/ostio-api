@@ -2,16 +2,19 @@ Ostio::Application.routes.draw do
 
   # resources :sessions
   match '/auth/github/callback' => 'omniauth_callbacks#github'
-  match '/users/me' => 'users#show_current'
   devise_for :users, only: []
-  resources :users, only: [:show] do
-    resources :repos, except: :edit do
-      resources :topics, except: :edit do
-        resources :posts, except: :edit
-      end
-    end
 
-    resources :posts
+  namespace :v1 do
+    match '/users/me' => 'users#show_current'
+    resources :users, only: [:show] do
+      resources :repos, except: :edit do
+        resources :topics, except: :edit do
+          resources :posts, except: :edit
+        end
+      end
+
+      resources :posts
+    end
   end
 
   match '/404', to: 'errors#not_found'
