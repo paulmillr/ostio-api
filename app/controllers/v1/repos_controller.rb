@@ -31,7 +31,7 @@ module V1
       @repo.assign_attributes({user: current_user}, without_protection: true)
 
       if @repo.save
-        render json: @repo, status: :created, location: v1_user_repo_path(@user, @repo)
+        render :show, status: :created, location: v1_user_repo_path(@user, @repo)
       else
         render json: @repo.errors, status: :unprocessable_entity
       end

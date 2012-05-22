@@ -16,7 +16,7 @@ module V1
     # GET /topics
     # GET /topics.json
     def index
-      @topics = @repo.topics
+      @topics = @repo.topics.order('updated_at DESC')
     end
 
     # GET /topics/1
@@ -34,7 +34,7 @@ module V1
       )
 
       if @topic.save
-        render json: @topic, status: :created, location: v1_user_repo_topic_path(@user, @repo, @topic)
+        render :show, status: :created, location: v1_user_repo_topic_path(@user, @repo, @topic)
       else
         render json: @topic.errors, status: :unprocessable_entity
       end

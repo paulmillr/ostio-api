@@ -35,7 +35,7 @@ module V1
       )
 
       if @post.save
-        render json: @post, status: :created, location: v1_user_repo_topic_post_path(@user, @repo, @topic, @post)
+        render :show, status: :created, location: v1_user_repo_topic_post_path(@user, @repo, @topic, @post)
       else
         render json: @post.errors, status: :unprocessable_entity
       end
