@@ -32,12 +32,12 @@ class OmniauthCallbacksController < ApplicationController
         existing_user.name = params[:name]
         existing_user.gravatar_id = params[:gravatar_id]
         existing_user.save!
-        render json: {authentication_token: existing_user.authentication_token}
+        render json: {access_token: existing_user.authentication_token}
       else
         # Sign up.
         user = User.new(params)
         user.save!
-        render json: {authentication_token: user.authentication_token}
+        render json: {access_token: user.authentication_token}
       end
     end
   end
