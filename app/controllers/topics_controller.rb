@@ -27,10 +27,13 @@ class TopicsController < ApplicationController
   # POST /topics
   # POST /topics.json
   def create
-    @topic = Topic.new(params[:topic].merge({user: current_user}))
+    @topic = Topic.new(params[:topic])
+    @topic.assign_attributes(
+      {user: current_user, repo: @repo}, without_protection: true
+    )
 
     if @topic.save
-      render json: @topic, status: :created, location: @topic
+      render json: @topic, status: :created, location: user_repo_topic_path(@user, @repo, @topic)
     else
       render json: @topic.errors, status: :unprocessable_entity
     end

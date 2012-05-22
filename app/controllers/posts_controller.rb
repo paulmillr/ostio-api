@@ -28,10 +28,13 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(params[:post].merge({user: current_user}))
+    @post = Post.new(params[:post])
+    @post.assign_attributes(
+      {user: current_user, topic: @topic}, without_protection: true
+    )
 
     if @post.save
-      render json: @post, status: :created, location: @post
+      render json: @post, status: :created, location: user_repo_topic_post_path(@user, @repo, @topic, @post)
     else
       render json: @post.errors, status: :unprocessable_entity
     end

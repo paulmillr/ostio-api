@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   before_save :ensure_authentication_token
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :login, :email, :github_id, :github_token, :name, :gravatar_id, :type
+  attr_accessible :github_token
 
   has_many :repos, dependent: :destroy
   has_many :topics, dependent: :destroy

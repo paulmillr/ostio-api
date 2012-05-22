@@ -26,10 +26,11 @@ class ReposController < ApplicationController
   # POST /repos
   # POST /repos.json
   def create
-    @repo = Repo.new(params[:repo].merge({user: current_user}))
+    @repo = Repo.new(params[:repo])
+    @repo.assign_attributes({user: current_user}, without_protection: true)
 
     if @repo.save
-      render json: @repo, status: :created, location: @repo
+      render json: @repo, status: :created, location: user_repo_path(@user, @repo)
     else
       render json: @repo.errors, status: :unprocessable_entity
     end
