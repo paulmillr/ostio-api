@@ -20,17 +20,18 @@ module V1
 
     # POST /sync_repos
     def create
-      @user_repos = @user.repos.all
-      @user_repos_ids = @user_repos.map(&:github_id)
-      @github_repos = Octokit.repos(@user.login)
-      @github_repos_ids = @github_repos.map { |repo| repo[:id].to_i }
-      @github_repos_assoc = {}
-      @github_repos.each do |repo|
-        @github_repos_assoc[repo[:id].to_i] = repo
+      @github_repos = {}
+      Octokit.repos(@user.login).each do |github_repo|
+        @github_repos[github_repo[:id].to_i] = github_repo
       end
+
+      @user_repos = {}
+      @user.repos.each do |user_repo|
+        @user_repos[user_repo.github_id] = user_repo
+      end
+
       remove_old_user_repos
       add_new_user_repos
-      puts 'Done!'
       render json: @user_repos
     end
 
@@ -41,20 +42,20 @@ module V1
       user_repo.assign_attributes({
         user: @user,
         name: github_repo[:name],
-        github_id: github_repo[:id]
+        github_id: github_repo[:id], 
       }, without_protection: true)
       user_repo.save!
       user_repo
     end
 
     def add_new_user_repos
-      (@github_repos_ids - @user_repos_ids).each do |github_repo|
-        @user_repos << create_new_repo(@github_repos_assoc[github_repo])
+      (@github_repos.keys - @user_repos.keys).each do |github_repo_id|
+        @user.repos << create_new_repo(@github_repos[github_repo_id])
       end
     end
 
     def remove_old_user_repos
-      Repo.destroy_all(github_id: (@user_repos_ids - @github_repos_ids))
+      Repo.destroy_all(github_id: @user_repos.keys - @github_repos.keys)
     end
   end
 end

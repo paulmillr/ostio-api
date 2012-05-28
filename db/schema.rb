@@ -56,13 +56,13 @@ ActiveRecord::Schema.define(:version => 20120528134218) do
   add_index "topics", ["user_id"], :name => "topics_user_id_fk"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                :default => "", :null => false
+    t.integer  "github_id"
     t.string   "login"
     t.string   "authentication_token"
     t.string   "name"
+    t.string   "email",                :default => "", :null => false
     t.string   "gravatar_id"
     t.string   "type"
-    t.integer  "github_id"
     t.string   "github_token"
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
