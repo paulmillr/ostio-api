@@ -32,7 +32,7 @@ module V1
 
       remove_old_user_repos
       add_new_user_repos
-      render json: @user.repos
+      head :no_content
     end
 
     private

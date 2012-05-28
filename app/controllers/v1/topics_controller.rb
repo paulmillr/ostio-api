@@ -22,7 +22,7 @@ module V1
     # GET /topics
     # GET /topics.json
     def index
-      @topics = @repo.topics.order('updated_at DESC')
+      @topics = @repo.topics.order(:updated_at).reverse_order
     end
 
     # GET /topics/1

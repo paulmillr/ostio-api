@@ -19,7 +19,7 @@ module V1
     # GET /repos
     # GET /repos.json
     def index
-      @repos = @user.repos
+      @repos = @user.repos.order(:updated_at)
     end
 
     # GET /repos/1
