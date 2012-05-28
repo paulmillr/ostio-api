@@ -26,8 +26,8 @@ class OmniauthCallbacksController < ApplicationController
     if user_signed_in?
       redirect_to controller: 'users', action: 'show_current'
     else
-      user = User.find_by_github_id(params[:github_id]) || User.new
-      refresh_attributes_and_save_user(user, params)
+      @user = User.find_by_github_id(params[:github_id]) || User.new
+      refresh_attributes_and_save_user(params)
     end
   end
 
@@ -35,6 +35,7 @@ class OmniauthCallbacksController < ApplicationController
 
   def create_new_organization(params)
     organization = User.new
+    # Org doesn't exist, add it.
     organization.assign_attributes({
       github_id: params[:id],
       login: params[:login],
@@ -45,45 +46,37 @@ class OmniauthCallbacksController < ApplicationController
     organization
   end
 
-  def add_new_user_orgs(user, user_orgs, github_orgs)
-    github_orgs.each do |org|
-      existing_org = User.find_by_github_id(org[:id])
-      # Check if organization exists in database.
-      if existing_org
-        # Organization exists, check if current user owns it.
-        unless existing_org.owners.include?(user)
-          # User doesn't own it, add it.
-          user_orgs << existing_org
-        end
-      else
-        # Organization doesn't exist, create it.
-        user_orgs << create_new_organization(org)
-      end
+  def add_new_user_orgs
+    (@github_orgs.keys - @user_orgs.keys).each do |github_org_id|
+      github_org = @github_orgs[github_org_id]
+      org = User.find_by_github_id(github_org_id) || create_new_organization(github_org)
+      @user.organizations << org
     end
   end
 
-  def remove_old_user_orgs(user, user_orgs, github_orgs)
-    github_orgs_ids = github_orgs.map { |org| org[:id] }.map(&:to_i)
+  def remove_old_user_orgs
+    User.destroy_all(github_id: @user_orgs.keys - @github_orgs.keys)
+  end
 
-    user_orgs.all.select do |organization|
-      !github_orgs_ids.include?(organization[:github_id])
-    end.each do |organization|
-      user_orgs.delete(organization)
+  def sync_user_orgs
+    @github_orgs = {}
+    Octokit.orgs(@user.login).each do |github_org|
+      @github_orgs[github_org[:id].to_i] = github_org
     end
+
+    @user_orgs = {}
+    @user.organizations.each do |user_org|
+      @user_orgs[user_org.github_id] = user_org
+    end
+
+    remove_old_user_orgs
+    add_new_user_orgs
   end
 
-  def sync_user_orgs(user)
-    # Get organizations for GitHub.
-    github_orgs = Octokit.orgs(user.login)
-    user_orgs = user.organizations
-    remove_old_user_orgs(user, user_orgs, github_orgs)
-    add_new_user_orgs(user, user_orgs, github_orgs)
-  end
-
-  def refresh_attributes_and_save_user(user, params)
-    user.assign_attributes(params, without_protection: true)
-    user.save!
-    sync_user_orgs(user)
-    render json: {access_token: user.authentication_token}
+  def refresh_attributes_and_save_user(params)
+    @user.assign_attributes(params, without_protection: true)
+    @user.save!
+    sync_user_orgs
+    render json: {access_token: @user.authentication_token}
   end
 end

@@ -24,19 +24,6 @@ module V1
       @repo = @user.repos.find_by_name!(params[:id])
     end
 
-    # POST /repos
-    # POST /repos.json
-    def create
-      @repo = Repo.new(params[:repo])
-      @repo.assign_attributes({user: current_user}, without_protection: true)
-
-      if @repo.save
-        render :show, status: :created, location: v1_user_repo_path(@user, @repo)
-      else
-        render json: @repo.errors, status: :unprocessable_entity
-      end
-    end
-
     # PATCH/PUT /repos/1
     # PATCH/PUT /repos/1.json
     def update
@@ -47,15 +34,6 @@ module V1
       else
         render json: @repo.errors, status: :unprocessable_entity
       end
-    end
-
-    # DELETE /repos/1
-    # DELETE /repos/1.json
-    def destroy
-      @repo = @user.repos.find_by_name!(params[:id])
-      @repo.destroy
-
-      head :no_content
     end
   end
 end

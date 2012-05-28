@@ -13,6 +13,7 @@ Ostio::Application.routes.draw do
         end
       end
 
+      resources :sync_repos, only: [:create]
       resources :posts
     end
   end
