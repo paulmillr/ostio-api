@@ -12,6 +12,7 @@ gem 'mysql2'
 gem 'devise', '~> 2.1.0'
 gem 'omniauth', '~> 1.1.0'
 gem 'omniauth-github', '~> 1.0.1'
+gem 'octokit', '~>1.2.1'
 
 # Enable Cross-Origin Resource Sharing.
 gem 'rack-cors', :require => 'rack/cors'

@@ -13,6 +13,11 @@ class User < ActiveRecord::Base
   has_many :topics, dependent: :destroy
   has_many :posts, dependent: :destroy
 
+  has_many :organization_owner_relationships, class_name: 'Organizationing', foreign_key: 'organization_id', dependent: :destroy
+  has_many :owners, through: :organization_owner_relationships, dependent: :destroy
+  has_many :owner_organization_relationships, class_name: 'Organizationing', foreign_key: 'owner_id', dependent: :destroy
+  has_many :organizations, through: :owner_organization_relationships, dependent: :destroy
+
   validates :login, length: {maximum: 40}
   validates :name, length: {maximum: 40}
 

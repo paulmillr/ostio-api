@@ -7,7 +7,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :name
       t.string :gravatar_id
       t.string :type
-      t.string :github_id
+      t.integer :github_id
       t.string :github_token
 
       t.timestamps

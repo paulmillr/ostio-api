@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120520134218) do
+ActiveRecord::Schema.define(:version => 20120528134218) do
+
+  create_table "organizationings", :force => true do |t|
+    t.integer "owner_id"
+    t.integer "organization_id"
+  end
+
+  add_index "organizationings", ["organization_id"], :name => "organizationings_organization_id_fk"
+  add_index "organizationings", ["owner_id"], :name => "organizationings_owner_id_fk"
 
   create_table "posts", :force => true do |t|
     t.integer  "topic_id",   :null => false
@@ -53,7 +61,7 @@ ActiveRecord::Schema.define(:version => 20120520134218) do
     t.string   "name"
     t.string   "gravatar_id"
     t.string   "type"
-    t.string   "github_id"
+    t.integer  "github_id"
     t.string   "github_token"
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
@@ -61,6 +69,9 @@ ActiveRecord::Schema.define(:version => 20120520134218) do
 
   add_index "users", ["email"], :name => "index_users_on_email"
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
+
+  add_foreign_key "organizationings", "users", :name => "organizationings_organization_id_fk", :column => "organization_id"
+  add_foreign_key "organizationings", "users", :name => "organizationings_owner_id_fk", :column => "owner_id"
 
   add_foreign_key "posts", "topics", :name => "posts_topic_id_fk"
   add_foreign_key "posts", "users", :name => "posts_user_id_fk"
