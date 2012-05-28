@@ -18,7 +18,8 @@ module V1
     end
 
     def show_current
-      render json: current_user
+      @user = current_user
+      render :show
     end
 
     # PATCH/PUT /users/1
