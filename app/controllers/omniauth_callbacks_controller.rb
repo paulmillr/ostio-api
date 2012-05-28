@@ -77,6 +77,6 @@ class OmniauthCallbacksController < ApplicationController
     @user.assign_attributes(params, without_protection: true)
     @user.save!
     sync_user_orgs
-    render json: {access_token: @user.authentication_token}
+    redirect_to "http://ost.io:3333/auth-callback/?login=#{@user.login}&accessToken=#{@user.authentication_token}"
   end
 end
