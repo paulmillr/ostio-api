@@ -4,7 +4,11 @@ module V1
     before_filter :check_permissions, except: [:index, :show, :show_current]
 
     def check_permissions
-      not_authorized unless current_user == @user
+      if @user.type == 'User'
+        not_authorized unless current_user == @user
+      else
+        not_authorized unless @user.owners.include?(current_user)
+      end
     end
 
     # GET /users/1

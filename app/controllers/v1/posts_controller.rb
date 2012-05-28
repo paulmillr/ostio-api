@@ -11,7 +11,13 @@ module V1
     end
 
     def check_permissions
-      not_authorized unless current_user == @user or current_user == @post.user
+      unless current_user == @post.user
+        if @user.type == 'User'
+          not_authorized unless current_user == @user
+        else
+          not_authorized unless @user.owners.include?(current_user)
+        end
+      end
     end
 
     # GET /posts
