@@ -9,8 +9,8 @@ Ostio::Application.routes.draw do
 
   namespace :v1 do
     match '/users/me' => 'users#show_current'
-    resources :users, only: [:show] do
-      resources :repos, except: :edit do
+    resources :users, constraints: {id: /[\w.-]+/}, only: [:show] do
+      resources :repos, constraints: {id: /[\w.-]+/}, except: :edit do
         resources :topics, except: :edit do
           resources :posts, except: :edit
         end

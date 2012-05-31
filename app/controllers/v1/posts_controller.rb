@@ -41,7 +41,9 @@ module V1
       )
 
       if @post.save
-        render :show, status: :created, location: v1_user_repo_topic_post_path(@user, @repo, @topic, @post)
+        render :show, status: :created
+        # The route is buggy. See rails/rails/issues/6564.
+        # location: v1_user_repo_topic_post_path(@user, @repo, @topic, @post)
       else
         render json: @post.errors, status: :unprocessable_entity
       end
