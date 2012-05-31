@@ -9,10 +9,18 @@ gem 'rails', '3.2.3'
 
 gem 'mysql2'
 
+# Provides auth.
 gem 'devise', '~> 2.1.0'
+
+# Provides OAuth.
 gem 'omniauth', '~> 1.1.0'
 gem 'omniauth-github', '~> 1.0.1'
+
+# GitHub v3 API kit.
 gem 'octokit', '~>1.2.1'
+
+# High-performance webserver for production.
+gem 'thin', '1.3.1'
 
 # Enable Cross-Origin Resource Sharing.
 gem 'rack-cors', :require => 'rack/cors'

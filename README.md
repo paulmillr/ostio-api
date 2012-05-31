@@ -6,6 +6,10 @@ This is a backend part of [ost.io](http://ost.io/) application.
 
 Ostio api is built with [Rails](http://rubyonrails.org/).
 
+## Deploying
+* Copy `nginx.conf` to your nginx dir: `cp nginx.conf /etc/nginx/api.conf`
+* Run thin webserver: `thin start -C thin.yml`
+
 ## API
 `GET`, `POST`, `PUT` / `PATCH` and `DELETE` are available to these resources.
 
