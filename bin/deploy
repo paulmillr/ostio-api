@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-if [ -z "$GITHUB_APP_ID" ];
+if [ -z "$GITHUB_APP_ID" ]; then
   echo "Enter your GitHub application info"
   echo "(available at https://github.com/settings/applications)"
 
