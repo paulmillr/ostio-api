@@ -1,8 +1,11 @@
 Ostio::Application.routes.draw do
+  devise_for :users, only: [], controllers: {
+    omniauth_callbacks: 'omniauth_callbacks'
+  }
 
-  # resources :sessions
-  match '/auth/github/callback' => 'omniauth_callbacks#github'
-  devise_for :users, only: []
+  devise_scope :user do
+    match '/auth/github/callback' => 'omniauth_callbacks#github'
+  end
 
   namespace :v1 do
     match '/users/me' => 'users#show_current'

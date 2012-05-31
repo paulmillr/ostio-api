@@ -9,7 +9,16 @@ Ostio api is built with [Rails](http://rubyonrails.org/).
 ## Deploying
 * Copy `nginx.conf` to your nginx dir: `sudo cp nginx.conf /etc/nginx/api.conf`
 * Restart nginx: `sudo /etc/init.d/nginx restart`
-* Run thin webserver: `thin start -C thin.yml`
+* Add your GitHub app id / secret to ENV:
+
+```
+# This is id / secret of example app. Callback URL for it:
+# http://dev.ost.io:3000/auth/github
+export GITHUB_APP_ID='b99404045c3917fd6be4'
+export GITHUB_APP_SECRET='fedbf022667be7056bcaca9568e55151b219c660'
+```
+
+* Restart thin webserver: `sudo killall thin && thin start -C thin.yml`
 
 ## API
 `GET`, `POST`, `PUT` / `PATCH` and `DELETE` are available to these resources.
