@@ -7,7 +7,8 @@ This is a backend part of [ost.io](http://ost.io/) application.
 Ostio api is built with [Rails](http://rubyonrails.org/).
 
 ## Deploying
-* Copy `nginx.conf` to your nginx dir: `cp nginx.conf /etc/nginx/api.conf`
+* Copy `nginx.conf` to your nginx dir: `sudo cp nginx.conf /etc/nginx/api.conf`
+* Restart nginx: `sudo /etc/init.d/nginx restart`
 * Run thin webserver: `thin start -C thin.yml`
 
 ## API
