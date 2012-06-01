@@ -6,6 +6,8 @@ class Repo < ActiveRecord::Base
 
   validate :unique_name
 
+  validates :name, presence: true
+
   def to_param
     name
   end

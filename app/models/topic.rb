@@ -5,6 +5,8 @@ class Topic < ActiveRecord::Base
   belongs_to :user
   has_many :posts, dependent: :destroy
 
+  validates :title, presence: true
+
   before_create :increment_number
 
   def to_param
