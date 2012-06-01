@@ -20,7 +20,10 @@ module V1
     end
 
     def to_json(thing)
-      json = thing.as_json({include: {repo: {include: :user}}})
+      json = thing.as_json({include: {
+        repo: {include: :user},
+        user: {}
+      }})
       if json.is_a?(Array)
         json.each do |topic|
           topic['total_posts'] = @total_posts[topic['id']]
