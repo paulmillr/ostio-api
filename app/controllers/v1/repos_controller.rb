@@ -16,16 +16,22 @@ module V1
       end
     end
 
+    def to_json(thing)
+      thing.to_json({include: :user})
+    end
+
     # GET /repos
     # GET /repos.json
     def index
       @repos = @user.repos.order(:updated_at)
+      render json: to_json(@repos)
     end
 
     # GET /repos/1
     # GET /repos/1.json
     def show
       @repo = @user.repos.find_by_name!(params[:id])
+      render json: to_json(@repo)
     end
 
     # PATCH/PUT /repos/1

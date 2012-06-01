@@ -20,16 +20,27 @@ module V1
       end
     end
 
+    def to_json(thing)
+      thing.to_json({include: {
+        user: {},
+        topic: {include: {
+          repo: {include: :user}
+        }}
+      }})
+    end
+
     # GET /posts
     # GET /posts.json
     def index
       @posts = @topic.posts
+      render json: to_json(@posts)
     end
 
     # GET /posts/1
     # GET /posts/1.json
     def show
       @post = Post.find(params[:id])
+      render json: to_json(@post)
     end
 
     # POST /posts
@@ -41,7 +52,7 @@ module V1
       )
 
       if @post.save
-        render :show, status: :created
+        render json: to_json(@post), status: :created
         # The route is buggy. See rails/rails/issues/6564.
         # location: v1_user_repo_topic_post_path(@user, @repo, @topic, @post)
       else

@@ -19,16 +19,33 @@ module V1
       end
     end
 
+    def to_json(thing)
+      json = thing.as_json({include: {repo: {include: :user}}})
+      if json.is_a?(Array)
+        json.each do |topic|
+          topic['total_posts'] = @total_posts[topic['id']]
+        end
+      else
+        json['total_posts'] = @total_posts
+      end
+      json
+    end
+
     # GET /topics
     # GET /topics.json
     def index
       @topics = @repo.topics.order(:updated_at).reverse_order
+      @total_posts = Post.where(topic_id: @topics.map(&:id)).group('topic_id').sum('topic_id')
+      
+      render json: to_json(@topics)
     end
 
     # GET /topics/1
     # GET /topics/1.json
     def show
       @topic = @repo.topics.find_by_number!(params[:id])
+      @total_posts = @topic.posts.count
+      render json: to_json(@topic)
     end
 
     # POST /topics
@@ -40,7 +57,8 @@ module V1
       )
 
       if @topic.save
-        render :show, status: :created
+        @total_posts = 1
+        render json: to_json(@topic), status: :created
         # The route is buggy. See rails/rails/issues/6564.
         # location: v1_user_repo_topic_path(@user, @repo, @topic)
       else

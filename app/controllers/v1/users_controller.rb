@@ -11,15 +11,20 @@ module V1
       end
     end
 
+    def to_json(thing)
+      thing.as_json
+    end
+
     # GET /users/1
     # GET /users/1.json
     def show
       @user = User.find_by_login!(params[:id])
+      render json: to_json(@user)
     end
 
     def show_current
       @user = current_user
-      render :show
+      render json: to_json(@user)
     end
 
     # PATCH/PUT /users/1
