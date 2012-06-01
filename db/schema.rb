@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20120528134218) do
     t.datetime "updated_at",                           :null => false
   end
 
+  add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token"
   add_index "users", ["email"], :name => "index_users_on_email"
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
 
