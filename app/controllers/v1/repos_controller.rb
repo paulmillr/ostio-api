@@ -23,7 +23,7 @@ module V1
     # GET /repos
     # GET /repos.json
     def index
-      @repos = @user.repos.order(:updated_at)
+      @repos = @user.repos.order(:updated_at).reverse_order
       render json: to_json(@repos)
     end
 

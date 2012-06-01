@@ -57,6 +57,8 @@ module V1
       )
 
       if @topic.save
+        @topic.repo.updated_at = Time.now
+        @topic.repo.save!
         @total_posts = 1
         render json: to_json(@topic), status: :created
         # The route is buggy. See rails/rails/issues/6564.

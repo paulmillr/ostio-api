@@ -4,9 +4,9 @@ class Repo < ActiveRecord::Base
   belongs_to :user
   has_many :topics, dependent: :destroy
 
-  validate :unique_name
+  before_create :validate_unique_name
 
-  validates :name, presence: true
+  validate :name, presence: true
 
   def to_param
     name
@@ -14,7 +14,7 @@ class Repo < ActiveRecord::Base
 
   private
 
-  def unique_name
+  def validate_unique_name
     if user.repos.pluck(:name).include?(name)
       errors.add(:name, 'must be unique to user')
     end
