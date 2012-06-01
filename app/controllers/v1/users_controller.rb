@@ -12,7 +12,8 @@ module V1
     end
 
     def to_json(thing)
-      thing.as_json
+      incl = thing.type == 'User' ? :organizations : :owners
+      thing.to_json(include: incl)
     end
 
     # GET /users/1

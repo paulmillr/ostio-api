@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
     login
   end
 
-  def as_json
-    super(except: [:github_key])
+  def as_json(args)
+    super(args.merge({except: [:github_key]}))
   end
 end
