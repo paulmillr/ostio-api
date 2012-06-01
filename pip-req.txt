@@ -1,0 +1,7 @@
+Django==1.4
+-e git+git://github.com/elevenbasetwo/django-cors.git#egg=django-cors
+MySQL-python
+-e git+git://github.com/tomchristie/django-rest-framework.git#egg=djangorestframework
+ipython
+django-extensions==0.8
+Werkzeug==0.8.3
