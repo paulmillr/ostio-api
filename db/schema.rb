@@ -13,13 +13,13 @@
 
 ActiveRecord::Schema.define(:version => 20120528134218) do
 
-  create_table "organizationings", :force => true do |t|
+  create_table "organization_owners", :force => true do |t|
     t.integer "owner_id"
     t.integer "organization_id"
   end
 
-  add_index "organizationings", ["organization_id"], :name => "organizationings_organization_id_fk"
-  add_index "organizationings", ["owner_id"], :name => "organizationings_owner_id_fk"
+  add_index "organization_owners", ["organization_id"], :name => "organization_owners_organization_id_fk"
+  add_index "organization_owners", ["owner_id"], :name => "organization_owners_owner_id_fk"
 
   create_table "posts", :force => true do |t|
     t.integer  "topic_id",   :null => false
@@ -71,8 +71,8 @@ ActiveRecord::Schema.define(:version => 20120528134218) do
   add_index "users", ["email"], :name => "index_users_on_email"
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
 
-  add_foreign_key "organizationings", "users", :name => "organizationings_organization_id_fk", :column => "organization_id"
-  add_foreign_key "organizationings", "users", :name => "organizationings_owner_id_fk", :column => "owner_id"
+  add_foreign_key "organization_owners", "users", :name => "organization_owners_organization_id_fk", :column => "organization_id"
+  add_foreign_key "organization_owners", "users", :name => "organization_owners_owner_id_fk", :column => "owner_id"
 
   add_foreign_key "posts", "topics", :name => "posts_topic_id_fk"
   add_foreign_key "posts", "users", :name => "posts_user_id_fk"

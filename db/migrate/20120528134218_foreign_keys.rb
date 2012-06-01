@@ -14,7 +14,7 @@ class ForeignKeys < ActiveRecord::Migration
       t.foreign_key :users
     end
 
-    change_table :organizationings do |t|
+    change_table :organization_owners do |t|
       t.foreign_key :users, column: :owner_id
       t.foreign_key :users, column: :organization_id
     end
