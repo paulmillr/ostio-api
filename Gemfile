@@ -9,6 +9,12 @@ gem 'rails', '3.2.3'
 
 gem 'mysql2'
 
+# To use foreign key constraints.
+gem 'foreigner'
+
+# To use bulk import.
+gem 'activerecord-import'
+
 # Provides auth.
 gem 'devise', '~> 2.1.0'
 
@@ -27,9 +33,6 @@ gem 'rack-cors', :require => 'rack/cors'
 
 # To use rake db:data:dump.
 gem 'yaml_db'
-
-# To use foreign key constraints.
-gem 'foreigner'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'

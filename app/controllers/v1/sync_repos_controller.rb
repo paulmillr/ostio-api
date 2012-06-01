@@ -38,19 +38,20 @@ module V1
     private
 
     def create_new_repo(github_repo)
-      user_repo = Repo.new
-      user_repo.assign_attributes({
+      Repo.new({
         user: @user,
         name: github_repo[:name],
         github_id: github_repo[:id], 
       }, without_protection: true)
-      user_repo.save!
-      user_repo
     end
 
     def add_new_user_repos
-      (@github_repos.keys - @user_repos.keys).each do |github_repo_id|
-        @user.repos << create_new_repo(@github_repos[github_repo_id])
+      ActiveRecord::Base.transaction do
+        repos = []
+        (@github_repos.keys - @user_repos.keys).each do |github_repo_id|
+          repos << create_new_repo(@github_repos[github_repo_id])
+        end
+        Repo.import repos
       end
     end
 
