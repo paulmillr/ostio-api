@@ -5,7 +5,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :login
       t.string :authentication_token
       t.string :name
-      t.string :email, null: false, :default => ''
+      t.string :email, default: ''
       t.string :gravatar_id
       t.string :type
       t.string :github_token
