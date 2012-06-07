@@ -63,7 +63,7 @@ Input:
 
 Input:
 
-* **title**: *Required* **string*
+* **title**: *Required* **string*&
 
 #### Delete topic
 `DELETE /users/:username/repos/:repo_name/topics/:topic_number`
