@@ -29,7 +29,7 @@ gem 'octokit', '~>1.2.1'
 gem 'thin', '1.3.1'
 
 # Enable Cross-Origin Resource Sharing.
-gem 'rack-cors', :require => 'rack/cors'
+gem 'rack-cors', require: 'rack/cors'
 
 # To use rake db:data:dump.
 gem 'yaml_db'
@@ -37,8 +37,10 @@ gem 'yaml_db'
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
 
+gem 'pry-rails', group: :development
+
 # To use Jbuilder templates for JSON
-gem 'jbuilder'
+# gem 'jbuilder'
 
 # Use unicorn as the app server
 # gem 'unicorn'
