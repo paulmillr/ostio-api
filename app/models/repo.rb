@@ -8,6 +8,17 @@ class Repo < ActiveRecord::Base
 
   validate :name, presence: true
 
+  default_scope order: 'updated_at DESC'
+
+  def self.popular(count = 20)
+    groupped = Topic
+      .group(:repo_id)
+      .order(:count_repo_id).reverse_order
+      .limit(count)
+      .count(:repo_id)
+    self.where(id: groupped.keys)
+  end
+
   def to_param
     name
   end

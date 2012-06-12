@@ -6,9 +6,5 @@ class Post < ActiveRecord::Base
 
   validates :text, presence: true
 
-  def self.latest
-    includes(:user, topic: [repo: :user])
-      .order(:updated_at).reverse_order()
-      .limit(20)
-  end
+  default_scope order: 'created_at DESC'
 end

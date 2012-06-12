@@ -21,9 +21,7 @@ class User < ActiveRecord::Base
   validates :login, length: {maximum: 40}, presence: true
   validates :name, length: {maximum: 40}
 
-  def self.latest
-    order(:created_at).reverse_order.limit(20)
-  end
+  default_scope order: 'created_at DESC'
 
   def as_json(args)
     super(args.merge({except: [:github_key]}))

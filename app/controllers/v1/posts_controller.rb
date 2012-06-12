@@ -37,7 +37,7 @@ module V1
     end
 
     def latest
-      @posts = Post.latest
+      @posts = Post.includes(:user, topic: [repo: :user]).limit(20)
       render json: to_json(@posts)
     end
 

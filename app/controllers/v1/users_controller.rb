@@ -17,7 +17,7 @@ module V1
     end
 
     def index
-      @users = User.latest
+      @users = User.limit(20)
       render json: @users
     end
 
