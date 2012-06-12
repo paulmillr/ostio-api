@@ -37,7 +37,7 @@ module V1
     # GET /topics
     # GET /topics.json
     def index
-      @topics = @repo.topics.order(:updated_at).reverse_order
+      @topics = @repo.topics.includes(:user, :repo)
       @total_posts = Post
         .where(topic_id: @topics.map(&:id))
         .group('topic_id').count('topic_id')

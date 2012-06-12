@@ -32,12 +32,14 @@ module V1
     # GET /posts
     # GET /posts.json
     def index
-      @posts = @topic.posts
+      @posts = @topic.posts.includes(:user, topic: [repo: :user])
       render json: to_json(@posts)
     end
 
     def latest
-      @posts = Post.includes(:user, topic: [repo: :user]).limit(20)
+      @posts = Post
+        .includes(:user, topic: [repo: :user])
+        .reverse_order.limit(20)
       render json: to_json(@posts)
     end
 

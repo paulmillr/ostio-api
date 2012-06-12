@@ -6,5 +6,5 @@ class Post < ActiveRecord::Base
 
   validates :text, presence: true
 
-  default_scope order: 'created_at DESC'
+  default_scope order: 'created_at'
 end
