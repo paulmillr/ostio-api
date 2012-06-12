@@ -21,11 +21,15 @@ class User < ActiveRecord::Base
   validates :login, length: {maximum: 40}, presence: true
   validates :name, length: {maximum: 40}
 
-  def to_param
-    login
+  def self.latest
+    order(:created_at).reverse_order.limit(20)
   end
 
   def as_json(args)
     super(args.merge({except: [:github_key]}))
+  end
+
+  def to_param
+    login
   end
 end

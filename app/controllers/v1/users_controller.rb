@@ -13,7 +13,12 @@ module V1
 
     def to_json(thing)
       incl = thing.type == 'User' ? :organizations : :owners
-      thing.to_json(include: incl)
+      thing.to_json(include: [:organizations, :owners])
+    end
+
+    def index
+      @users = User.latest
+      render json: @users
     end
 
     # GET /users/1

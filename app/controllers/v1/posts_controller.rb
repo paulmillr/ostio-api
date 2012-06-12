@@ -1,8 +1,8 @@
 module V1
   class PostsController < ApplicationController
-    before_filter :check_sign_in, except: [:index, :show]
-    before_filter :load_parents
-    before_filter :check_permissions, except: [:index, :create, :show]
+    before_filter :check_sign_in, except: [:index, :latest, :show]
+    before_filter :load_parents, except: [:latest]
+    before_filter :check_permissions, except: [:index, :latest, :create, :show]
 
     def load_parents
       @user = User.find_by_login!(params[:user_id])
@@ -33,6 +33,11 @@ module V1
     # GET /posts.json
     def index
       @posts = @topic.posts
+      render json: to_json(@posts)
+    end
+
+    def latest
+      @posts = Post.latest
       render json: to_json(@posts)
     end
 

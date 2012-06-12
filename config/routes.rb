@@ -9,7 +9,7 @@ Ostio::Application.routes.draw do
 
   namespace :v1 do
     match '/users/me' => 'users#show_current'
-    resources :users, constraints: {id: /[\w.-]+/}, only: [:show] do
+    resources :users, constraints: {id: /[\w.-]+/}, only: [:index, :show] do
       resources :repos, constraints: {id: /[\w.-]+/}, except: :edit do
         resources :topics, except: :edit do
           resources :posts, except: :edit
@@ -17,8 +17,8 @@ Ostio::Application.routes.draw do
       end
 
       resources :sync_repos, only: [:create]
-      resources :posts
     end
+    get '/posts/' => 'posts#latest'
   end
 
   match '/404', to: 'errors#not_found'
