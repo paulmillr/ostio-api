@@ -27,7 +27,7 @@ class Topic < ActiveRecord::Base
   private
 
   def increment_number
-    last = repo.topics.last
+    last = repo.topics.first
     self.number = (last ? last.number : 0) + 1
   end
 end
