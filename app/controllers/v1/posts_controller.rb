@@ -2,7 +2,7 @@ module V1
   class PostsController < ApplicationController
     before_filter :check_sign_in, except: [:index, :latest, :show]
     before_filter :load_parents, except: [:latest]
-    before_filter :check_permissions, except: [:index, :latest, :create, :show]
+    before_filter :check_permissions, only: [:update, :destroy]
 
     def load_parents
       @user = User.find_by_login!(params[:user_id])
@@ -11,6 +11,7 @@ module V1
     end
 
     def check_permissions
+      @post = Post.find(params[:id])
       unless current_user == @post.user
         if @user.type == 'User'
           not_authorized unless current_user == @user
@@ -70,8 +71,6 @@ module V1
     # PATCH/PUT /posts/1
     # PATCH/PUT /posts/1.json
     def update
-      @post = Post.find(params[:id])
-
       if @post.update_attributes(params[:post])
         head :no_content
       else
@@ -82,10 +81,11 @@ module V1
     # DELETE /posts/1
     # DELETE /posts/1.json
     def destroy
-      @post = Post.find(params[:id])
-      @post.destroy
-
-      head :no_content
+      if @post.destroy
+        head :no_content
+      else
+        render json: @post.errors, status: :unprocessable_entity
+      end
     end
   end
 end

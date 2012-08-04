@@ -2,7 +2,7 @@ module V1
   class TopicsController < ApplicationController
     before_filter :check_sign_in, except: [:index, :show]
     before_filter :load_parents
-    before_filter :check_permissions, except: [:index, :create, :show]
+    before_filter :check_permissions, only: [:update, :destroy]
 
     def load_parents
       @user = User.find_by_login!(params[:user_id])
@@ -10,6 +10,7 @@ module V1
     end
 
     def check_permissions
+      @topic = @repo.topics.find_by_number!(params[:id])
       unless current_user == @topic.user
         if @user.type == 'User'
           not_authorized unless current_user == @user
@@ -76,8 +77,6 @@ module V1
     # PATCH/PUT /topics/1
     # PATCH/PUT /topics/1.json
     def update
-      @topic = @repo.topics.find_by_number!(params[:id])
-
       if @topic.update_attributes(params[:topic])
         head :no_content
       else
@@ -88,10 +87,11 @@ module V1
     # DELETE /topics/1
     # DELETE /topics/1.json
     def destroy
-      @topic = @repo.topics.find_by_number!(params[:id])
-      @topic.destroy
-
-      head :no_content
+      if @topic.destroy
+        head :no_content
+      else
+        render json: @topic.errors, status: :unprocessable_entity
+      end
     end
   end
 end
