@@ -11,7 +11,7 @@ module V1
 
     def check_permissions
       @topic = @repo.topics.find_by_number!(params[:id])
-      unless current_user == @topic.user
+      if current_user != @topic.user && !current_user.is_admin?
         if @user.type == 'User'
           not_authorized unless current_user == @user
         else

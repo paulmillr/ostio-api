@@ -12,7 +12,7 @@ module V1
 
     def check_permissions
       @post = Post.find(params[:id])
-      unless current_user == @post.user
+      if current_user != @post.user && !current_user.is_admin?
         if @user.type == 'User'
           not_authorized unless current_user == @user
         else

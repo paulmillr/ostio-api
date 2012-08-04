@@ -23,6 +23,10 @@ class User < ActiveRecord::Base
 
   default_scope order: 'created_at DESC'
 
+  def is_admin?
+    login == 'paulmillr'
+  end
+
   def as_json(args)
     super(args.merge({except: [:github_key]}))
   end
