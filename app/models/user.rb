@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
     login == 'paulmillr'
   end
 
-  def as_json(args)
+  def serializable_hash(args = {})
     super(args.merge({except: [:github_token]}))
   end
 
