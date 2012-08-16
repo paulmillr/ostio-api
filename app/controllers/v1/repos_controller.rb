@@ -2,18 +2,10 @@ module V1
   class ReposController < ApplicationController
     before_filter :check_sign_in, except: [:index, :show]
     before_filter :load_parents
-    before_filter :check_permissions, except: [:index, :show]
+    before_filter :check_permissions, only: [:update]
 
     def load_parents
       @user = User.find_by_login!(params[:user_id])
-    end
-
-    def check_permissions
-      if @user.type == 'User'
-        not_authorized unless current_user == @user
-      else
-        not_authorized unless @user.owners.include?(current_user)
-      end
     end
 
     def to_json(thing)

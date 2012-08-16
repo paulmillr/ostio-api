@@ -10,14 +10,6 @@ module V1
       @user = User.find_by_login!(params[:user_id])
     end
 
-    def check_permissions
-      if @user.type == 'User'
-        not_authorized unless current_user == @user
-      else
-        not_authorized unless @user.owners.include?(current_user)
-      end
-    end
-
     # POST /sync_repos
     def create
       @github_repos = {}

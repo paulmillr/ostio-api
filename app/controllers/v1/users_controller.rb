@@ -1,15 +1,7 @@
 module V1
   class UsersController < ApplicationController
     before_filter :check_sign_in, except: [:index, :show]
-    before_filter :check_permissions, except: [:index, :show, :show_current]
-
-    def check_permissions
-      if @user.type == 'User'
-        not_authorized unless current_user == @user
-      else
-        not_authorized unless @user.owners.include?(current_user)
-      end
-    end
+    before_filter :check_permissions, only: [:update, :destroy]
 
     def to_json(thing)
       incl = thing.type == 'User' ? :organizations : :owners

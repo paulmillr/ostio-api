@@ -12,12 +12,8 @@ module V1
 
     def check_permissions
       @post = Post.find(params[:id])
-      if current_user != @post.user && !current_user.is_admin?
-        if @user.type == 'User'
-          not_authorized unless current_user == @user
-        else
-          not_authorized unless @user.owners.include?(current_user)
-        end
+      if current_user != @post.user
+        super
       end
     end
 
