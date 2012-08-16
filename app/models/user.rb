@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   end
 
   def as_json(args)
-    super(args.merge({except: [:github_key]}))
+    super(args.merge({except: [:github_token]}))
   end
 
   def to_param
