@@ -20,6 +20,12 @@ class Topic < ActiveRecord::Base
     self.where(id: groupped.keys)
   end
 
+  def poster_emails
+    posts.map(&:user).uniq.select { |user|
+      user.enabled_email_notifications && !user.email.nil? && !user.email.empty?
+    }.map(&:email)
+  end
+
   def to_param
     number
   end
