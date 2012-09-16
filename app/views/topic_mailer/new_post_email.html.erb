@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body><p><strong><%= @post.user.login %> said:</strong></p><p><%= @post.text %></p>
+    <p>&mdash;</p>
+    <p>Reply to this post at <a href="http://ost.io/<%= @post.topic.repo.user.login %>/<%= @post.topic.repo.name %>/topics/<%= @post.topic.number %>">ost.io/<%= @post.topic.repo.user.login %>/<%= @post.topic.repo.name %>/topics/<%= @post.topic.number %></a></p>
+
+    <p>You can unsubscribe via <a href="https://ost.io/settings">settings</a>.</p>
+</body>
+</html>

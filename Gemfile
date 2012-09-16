@@ -37,6 +37,10 @@ gem 'yaml_db'
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
 
+# Mailer.
+gem 'mail', '~> 2.4.0'
+gem 'delayed_job_active_record'
+
 gem 'pry-rails', group: :development
 
 # To use Jbuilder templates for JSON

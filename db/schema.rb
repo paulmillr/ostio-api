@@ -11,7 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120528134218) do
+ActiveRecord::Schema.define(:version => 20120824160056) do
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "organization_owners", :force => true do |t|
     t.integer "owner_id"
@@ -60,12 +76,13 @@ ActiveRecord::Schema.define(:version => 20120528134218) do
     t.string   "login"
     t.string   "authentication_token"
     t.string   "name"
-    t.string   "email",                :default => "", :null => false
+    t.string   "email",                       :default => ""
     t.string   "gravatar_id"
     t.string   "type"
     t.string   "github_token"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+    t.boolean  "enabled_email_notifications", :default => false
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token"
@@ -74,9 +91,6 @@ ActiveRecord::Schema.define(:version => 20120528134218) do
 
   add_foreign_key "organization_owners", "users", :name => "organization_owners_organization_id_fk", :column => "organization_id"
   add_foreign_key "organization_owners", "users", :name => "organization_owners_owner_id_fk", :column => "owner_id"
-
-  add_foreign_key "posts", "topics", :name => "posts_topic_id_fk"
-  add_foreign_key "posts", "users", :name => "posts_user_id_fk"
 
   add_foreign_key "repos", "users", :name => "repos_user_id_fk"
 
