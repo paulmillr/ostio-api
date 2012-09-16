@@ -1,7 +1,6 @@
 module V1
   class UsersController < ApplicationController
-    before_filter :check_sign_in, except: [:index, :show]
-    before_filter :check_permissions, only: [:update, :destroy]
+    before_filter :check_sign_in, except: [:index]
 
     def to_json(thing)
       incl = thing.type == 'User' ? :organizations : :owners
@@ -13,13 +12,6 @@ module V1
       render json: @users
     end
 
-    # GET /users/1
-    # GET /users/1.json
-    def show
-      @user = User.find_by_login!(params[:id])
-      render json: to_json(@user)
-    end
-
     def show_current
       @user = current_user
       render json: to_json(@user)
@@ -28,9 +20,15 @@ module V1
     # PATCH/PUT /users/1
     # PATCH/PUT /users/1.json
     def update
-      @user = User.find_by_login!(params[:id])
+      @user = current_user
 
-      if @user.update_attributes(params[:user])
+      keys = User.accessible_attributes.to_a.reject(&:empty?)
+      attributes = {}
+      keys.each do |key|
+        attributes[key] = params[key] if params.has_key?(key)
+      end
+
+      if @user.update_attributes(attributes)
         head :no_content
       else
         render json: @user.errors, status: :unprocessable_entity
@@ -40,7 +38,7 @@ module V1
     # DELETE /users/1
     # DELETE /users/1.json
     def destroy
-      @user = User.find_by_login!(params[:id])
+      @user = current_user
       @user.destroy
 
       head :no_content
