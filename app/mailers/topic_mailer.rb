@@ -17,6 +17,4 @@ class TopicMailer < ActionMailer::Base
       mail(to: email, subject: subject)
     end
   end
-
-  handle_asynchronously :new_post_email
 end
