@@ -1,6 +1,6 @@
 module V1
   class UsersController < ApplicationController
-    before_filter :check_sign_in, except: [:index]
+    before_filter :check_sign_in, except: [:index, :show]
 
     def to_json(thing)
       incl = thing.type == 'User' ? :organizations : :owners
@@ -10,6 +10,13 @@ module V1
     def index
       @users = User.limit(20)
       render json: @users
+    end
+
+    # GET /users/1
+    # GET /users/1.json
+    def show
+      @user = User.find_by_login!(params[:id])
+      render json: to_json(@user)
     end
 
     def show_current
