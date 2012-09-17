@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 
-git pull && \
-  sudo killall thin && \
-  thin start -C thin.yml
+pkill ruby && \
+  thin start -C thin.yml && \
+  RAILS_ENV=production script/delayed_job restart
