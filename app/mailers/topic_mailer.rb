@@ -1,7 +1,7 @@
 class TopicMailer < ActionMailer::Base
   default from: 'noreply@ost.io'
 
-  def new_post_email(post, subscriber)
+  def new_post_email(post, subscriber_email)
     @post = post
     topic = post.topic
     repo = topic.repo
