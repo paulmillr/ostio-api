@@ -56,7 +56,14 @@ module V1
       )
 
       if @post.save
-        TopicMailer.delay.new_post_email(@post)
+        user_email = @post.user.email
+        subscribers = @topic.poster_emails.select do |email|
+          email != user_email
+        end
+        subscribers.each do |subscriber|
+          TopicMailer.delay.new_post_email(@post, subscriber)
+        end
+
         render json: to_json(@post), status: :created
         # The route is buggy. See rails/rails/issues/6564.
         # location: v1_user_repo_topic_post_path(@user, @repo, @topic, @post)
