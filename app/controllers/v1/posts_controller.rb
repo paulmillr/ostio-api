@@ -56,12 +56,14 @@ module V1
       )
 
       if @post.save
-        user_email = @post.user.email
-        subscribers = @topic.poster_emails.select do |email|
-          email != user_email
-        end
-        subscribers.each do |subscriber|
-          TopicMailer.delay.new_post_email(@post, subscriber)
+        # Send emails to:
+        # * Folk(s) who own current repo.
+        # * Folks who posted in current thread.
+        is_org = (@user.type == 'Organization')
+        owners = is_org ? @user.owners.pluck(:email).compact : [@user.email]
+        subscribers = @topic.poster_emails - [@post.user.email]
+        (owners + subscribers).uniq.each do |email_address|
+          TopicMailer.delay.new_post_email(@post, email_address)
         end
 
         render json: to_json(@post), status: :created
