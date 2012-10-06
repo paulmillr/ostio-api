@@ -61,8 +61,10 @@ module V1
         # * Folks who posted in current thread.
         is_org = (@user.type == 'Organization')
         owners = is_org ? @user.owners.pluck(:email).compact : [@user.email]
-        subscribers = @topic.poster_emails - [@post.user.email]
-        (owners + subscribers).uniq.each do |email_address|
+        subscribers = @topic.poster_emails
+        emails = (owners + subscribers).uniq - [@post.user.email]
+
+        emails.each do |email_address|
           TopicMailer.delay.new_post_email(@post, email_address)
         end
 
