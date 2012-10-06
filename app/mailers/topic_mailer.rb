@@ -8,6 +8,6 @@ class TopicMailer < ActionMailer::Base
     post_user = post.user
     repo_user = repo.user
     @url = "ost.io/#{repo_user.login}/#{repo.name}/topics/#{topic.number}"
-    mail(to: subscriber_email, subject: "Re: [#{repo.name}] #{post.text}")
+    mail(to: subscriber_email, subject: "Re: [#{repo.name}] #{topic.title}")
   end
 end
