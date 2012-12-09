@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.3'
+gem 'rails', '3.2.9'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -19,8 +19,8 @@ gem 'activerecord-import'
 gem 'devise', '~> 2.1.0'
 
 # Provides OAuth.
-gem 'omniauth', '~> 1.1.0'
-gem 'omniauth-github', '~> 1.0.1'
+gem 'omniauth', '~> 1.1.1'
+gem 'omniauth-github', '~> 1.0.2'
 
 # GitHub v3 API kit.
 gem 'octokit', '~>1.2.1'
