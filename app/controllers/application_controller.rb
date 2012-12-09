@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_permissions
-    if !current_user.is_admin?
+    unless current_user.is_admin?
       if @user.type == 'User'
         not_authorized unless current_user == @user
       else

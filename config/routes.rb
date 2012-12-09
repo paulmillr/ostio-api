@@ -16,6 +16,7 @@ Ostio::Application.routes.draw do
         end
       end
 
+      get '/posts/' => 'posts#by_user'
       resources :sync_repos, only: [:create]
     end
     get '/posts/' => 'posts#latest'
