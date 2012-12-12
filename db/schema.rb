@@ -92,6 +92,9 @@ ActiveRecord::Schema.define(:version => 20120824160056) do
   add_foreign_key "organization_owners", "users", :name => "organization_owners_organization_id_fk", :column => "organization_id"
   add_foreign_key "organization_owners", "users", :name => "organization_owners_owner_id_fk", :column => "owner_id"
 
+  add_foreign_key "posts", "topics", :name => "posts_topic_id_fk"
+  add_foreign_key "posts", "users", :name => "posts_user_id_fk"
+
   add_foreign_key "repos", "users", :name => "repos_user_id_fk"
 
   add_foreign_key "topics", "repos", :name => "topics_repo_id_fk"
