@@ -74,7 +74,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def default_uri
-    path = "auth-callback/?login=#{@user.login}&accessToken=#{@user.authentication_token}"
+    path = "auth-callback/#{@user.login}/#{@user.authentication_token}"
     if Rails.env.production?
       "http://ost.io/#{path}"
     else
