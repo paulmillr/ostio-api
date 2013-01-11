@@ -73,20 +73,15 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     add_new_user_orgs
   end
 
-  def default_uri
-    path = "auth-callback/#{@user.login}/#{@user.authentication_token}"
-    if Rails.env.production?
-      "http://ost.io/#{path}"
-    else
-      "http://dev.ost.io:3333/#{path}"
-    end
-  end
-
   def refresh_attributes_and_save_user(params)
     @user.assign_attributes(params, without_protection: true)
     @user.save!
     sync_user_orgs
-    # FIXME.
-    redirect_to request.env['omniauth.origin'] || default_uri
+    query = {
+      login: @user.login, accessToken: @user.authentication_token
+    }.to_query
+    domain = request.env['omniauth.origin']
+    sep = if domain.include?('?') then '&' else '?' end
+    redirect_to domain + sep + query
   end
 end
