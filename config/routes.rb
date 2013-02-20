@@ -8,6 +8,7 @@ Ostio::Application.routes.draw do
   end
 
   namespace :v1 do
+    get '/' => 'home#index'
     match '/users/me' => 'users#show_current'
     resources :users, constraints: {id: /[\w.-]+/} do
       resources :repos, constraints: {id: /[\w.-]+/}, except: :edit do
