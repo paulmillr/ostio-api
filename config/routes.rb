@@ -8,7 +8,6 @@ Ostio::Application.routes.draw do
   end
 
   namespace :v1 do
-    get '/' => 'home#index'
     match '/users/me' => 'users#show_current'
     resources :users, constraints: {id: /[\w.-]+/} do
       resources :repos, constraints: {id: /[\w.-]+/}, except: :edit do
@@ -26,6 +25,7 @@ Ostio::Application.routes.draw do
   match '/404', to: 'errors#not_found'
   match '/418', to: 'errors#i_am_a_teapot'
   match '/500', to: 'errors#server_error'
+  get '/' => 'home#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
