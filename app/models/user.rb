@@ -27,6 +27,18 @@ class User < ActiveRecord::Base
     login == 'paulmillr'
   end
 
+  def receives_emails?
+    enabled_email_notifications && !email.nil? && !email.empty?
+  end
+
+  def owners_emails
+    if type == 'Organization'
+      owners.select { |user| user.receives_emails? }.map(&:email)
+    else
+      [email]
+    end
+  end
+
   def serializable_hash(args = {})
     super(args.merge({except: [:github_token]}))
   end

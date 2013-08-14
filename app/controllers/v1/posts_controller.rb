@@ -65,10 +65,8 @@ module V1
         # Send emails to:
         # * Folk(s) who own current repo.
         # * Folks who posted in current thread.
-        is_org = (@user.type == 'Organization')
-        owners = is_org ? @user.owners.pluck(:email).compact : [@user.email]
-        subscribers = @topic.poster_emails
-        emails = (owners + subscribers).uniq - [@post.user.email]
+        posted = [@post.user.email]
+        emails = (@user.owners_emails + @topic.poster_emails).uniq - posted
 
         emails.each do |email_address|
           TopicMailer.delay.new_post_email(@post, email_address)

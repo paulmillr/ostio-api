@@ -21,9 +21,7 @@ class Topic < ActiveRecord::Base
   end
 
   def poster_emails
-    posts.map(&:user).uniq.select { |user|
-      user.enabled_email_notifications && !user.email.nil? && !user.email.empty?
-    }.map(&:email)
+    posts.map(&:user).uniq.select { |user| user.receives_emails? }.map(&:email)
   end
 
   def to_param
