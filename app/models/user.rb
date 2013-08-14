@@ -35,7 +35,11 @@ class User < ActiveRecord::Base
     if type == 'Organization'
       owners.select { |user| user.receives_emails? }.map(&:email)
     else
-      [email]
+      if receives_emails?
+        [email]
+      else
+        []
+      end
     end
   end
 
