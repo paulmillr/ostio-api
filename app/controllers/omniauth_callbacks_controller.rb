@@ -39,7 +39,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     organization.assign_attributes({
       github_id: params[:id],
       login: params[:login],
-      gravatar_id: /\/avatar\/(\w+)\?/.match(params[:avatar_url])[1],
+      gravatar_id: params[:gravatar_id],
       type: 'Organization'
     }, without_protection: true)
     organization.save!
