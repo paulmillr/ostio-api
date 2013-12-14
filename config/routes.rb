@@ -20,6 +20,7 @@ Ostio::Application.routes.draw do
       resources :sync_repos, only: [:create]
     end
     get '/posts/' => 'posts#latest'
+    get '/search/' => 'posts#search'
     get '/' => 'home#index'
   end
 

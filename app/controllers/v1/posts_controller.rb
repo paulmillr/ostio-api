@@ -1,7 +1,7 @@
 module V1
   class PostsController < ApplicationController
-    before_filter :check_sign_in, except: [:index, :latest, :by_user, :show]
-    before_filter :load_parents, except: [:latest, :by_user]
+    before_filter :check_sign_in, except: [:index, :latest, :by_user, :search, :show]
+    before_filter :load_parents, except: [:latest, :search, :by_user]
     before_filter :check_permissions, only: [:update, :destroy]
 
     def load_parents
@@ -44,6 +44,16 @@ module V1
       @user = User.find_by_login!(params[:user_id])
       @posts = @user.posts.includes(:user, topic: [repo: :user])
       render json: to_json(@posts)
+    end
+
+    def search
+      query = params[:query]
+      if query && query.size > 3
+        @posts = Post.where('text LIKE ?', "%#{query}%").includes(:user, topic: [repo: :user]).reverse_order
+        render json: to_json(@posts)
+      else
+        render json: []
+      end
     end
 
     # GET /posts/1

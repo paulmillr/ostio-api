@@ -38,7 +38,7 @@ module V1
       @total_posts = Post
         .where(topic_id: @topics.map(&:id))
         .group('topic_id').count('topic_id')
-      
+
       render json: to_json(@topics)
     end
 
