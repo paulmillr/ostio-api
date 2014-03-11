@@ -31,9 +31,11 @@ Current API version is v1. You need to prepend `v1/` to app requests except auth
 ### Auth
 `/auth/github?origin=http://example.com/`
 
-All requests that change state (`POST`, `PUT`, `DELETE`) require authentication.
+
 
 When authenticated, ostio will redirect to your `origin` with params `login` and `accessToken`: `http://example.com?login=paulmillr&accessToken=af952810adbt`
+
+All requests that change state (`POST`, `PUT`, `DELETE`) require authentication. Pass authentication in the `accessToken` query parameter for any requests made to this api.
 
 ### Users API
 `:username` is a user name user has on GitHub.
