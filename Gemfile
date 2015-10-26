@@ -7,7 +7,7 @@ gem 'rails', '3.2.11'
 
 # gem 'rails-api', git: 'git://github.com/spastorino/rails-api.git'
 
-gem 'mysql2', '0.3.11'
+gem 'mysql2', '~> 0.3.11'
 
 # To use foreign key constraints.
 gem 'foreigner', '1.1.6'
