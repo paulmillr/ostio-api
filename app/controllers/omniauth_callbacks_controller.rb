@@ -9,14 +9,15 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     info = omniauth['extra']['raw_info']
+    # p [1234, info[:name]]
     params = {
-      github_id: info['id'].to_i,
-      github_token: omniauth['credentials']['token'],
-      login: info['login'],
-      email: info['email'],
-      name: info['name'],
-      gravatar_id: info['gravatar_id'],
-      type: info['type']
+      github_id: info[:id].to_i,
+      github_token: omniauth[:credentials][:token],
+      login: info[:login],
+      email: info[:email],
+      name: info[:name],
+      gravatar_id: info[:gravatar_id],
+      type: info[:type]
     }
 
     unless params[:github_id] and params[:login]
@@ -40,6 +41,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       github_id: params[:id],
       login: params[:login],
       gravatar_id: params[:gravatar_id],
+      name: params[:login],
       type: 'Organization'
     }, without_protection: true)
     organization.save!
@@ -47,15 +49,20 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def add_new_user_orgs
-    (@github_orgs.keys - @user_orgs.keys).each do |github_org_id|
+    orgs = (@github_orgs.keys - @user_orgs.keys)
+    # p [2345, orgs]
+    orgs.each do |github_org_id|
       github_org = @github_orgs[github_org_id]
       org = User.find_by_github_id(github_org_id) || create_new_organization(github_org)
+      # p [1111, github_org, org]
       @user.organizations << org
     end
   end
 
   def remove_old_user_orgs
-    User.destroy_all(github_id: @user_orgs.keys - @github_orgs.keys)
+    list = @user_orgs.keys - @github_orgs.keys
+    p [688, list]
+    User.destroy_all(github_id: list)
   end
 
   def sync_user_orgs
@@ -69,8 +76,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @user_orgs[user_org.github_id] = user_org
     end
 
-    remove_old_user_orgs
-    add_new_user_orgs
+    # remove_old_user_orgs()
+    # add_new_user_orgs()
   end
 
   def refresh_attributes_and_save_user(params)
