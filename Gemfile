@@ -43,6 +43,8 @@ gem 'delayed_job_active_record', '0.3.2'
 
 gem 'pry-rails', group: :development
 
+gem 'test-unit', group: :development
+
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 

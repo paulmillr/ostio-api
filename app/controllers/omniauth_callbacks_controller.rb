@@ -16,7 +16,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       login: info[:login],
       email: info[:email],
       name: info[:name],
-      gravatar_id: info[:gravatar_id],
+      avatar_url: info[:avatar_url],
       type: info[:type]
     }
 
