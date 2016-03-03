@@ -1,10 +1,10 @@
-# Ost.io-api
+# Ost.io API
 Your open-source talks place. Backend part.
 
 ## Getting started
 This is a backend part of [ost.io](http://ost.io/) application.
 
-Ostio api is built with [Rails](http://rubyonrails.org/).
+Ostio API is built with [Sinatra](http://www.sinatrarb.com/).
 
 ## Deploying
 * Copy `nginx.conf` to your nginx dir: `sudo cp nginx.conf /etc/nginx/api.conf`
@@ -33,34 +33,36 @@ Current API version is v1. You need to prepend `v1/` to app requests except auth
 
 
 
-When authenticated, ostio will redirect to your `origin` with params `login` and `accessToken`: `http://example.com?login=paulmillr&accessToken=af952810adbt`
+When authenticated, ostio will redirect to your `origin` with params `login` and `accessToken`:
+`http://example.com?login=paulmillr&accessToken=af952810adbt`
 
-All requests that change state (`POST`, `PUT`, `DELETE`) require authentication. Pass authentication in the `accessToken` query parameter for any requests made to this api.
+All requests that change state (`POST`, `PUT`, `DELETE`) require authentication.
+Pass authentication in the `accessToken` query parameter for any requests made to this api.
 
 ### Users API
-`:username` is a user name user has on GitHub.
+`:user_name` is a user name user has on GitHub.
 
 #### Get user data
-`GET /users/:username`
+`GET /users/:user_name`
 
 **Example:** http://api.ost.io/v1/users/paulmillr
 
 #### Delete user
-`DELETE /users/:username`
+`DELETE /users/:user_name`
 
 ### Repos API
 `:repo_name` is a repository name it has on GitHub.
 
 #### List user repos
-`GET /users/:username/repos/`
+`GET /users/:user_name/repos/`
 
 **Example:** http://api.ost.io/v1/users/paulmillr/repos/
 
 #### Sync repos with GitHub
-`POST /users/:username/repos/`
+`POST /users/:user_name/repos/`
 
 #### Get repo data
-`GET /users/:username/repos/:repo_name`
+`GET /users/:user_name/repos/:repo_name`
 
 **Example:** http://api.ost.io/v1/users/paulmillr/repos/ostio
 
@@ -68,59 +70,59 @@ All requests that change state (`POST`, `PUT`, `DELETE`) require authentication.
 `:topic_number` is a number, local to current repository.
 
 #### List repo topics
-`GET /users/:username/repos/:repo_name/topics/`
+`GET /users/:user_name/repos/:repo_name/topics/`
 
 **Example:** http://api.ost.io/v1/users/paulmillr/repos/ostio/topics/
 
 #### Create new topic
-`POST /users/:username/repos/:repo_name/topics/`
+`POST /users/:user_name/repos/:repo_name/topics/`
 
 Input:
 
 * **title**: *Required* **string**
 
 #### Get topic data
-`GET /users/:username/repos/:repo_name/topics/:topic_number`
+`GET /users/:user_name/repos/:repo_name/topics/:topic_number`
 
 **Example:** http://api.ost.io/v1/users/paulmillr/repos/ostio/topics/1
 
 #### Modify topic
-`PUT /users/:username/repos/:repo_name/topics/:topic_number`
+`PUT /users/:user_name/repos/:repo_name/topics/:topic_number`
 
 Input:
 
-* **title**: *Required* **string*&
+* **title**: *Required* **string**
 
 #### Delete topic
-`DELETE /users/:username/repos/:repo_name/topics/:topic_number`
+`DELETE /users/:user_name/repos/:repo_name/topics/:topic_number`
 
 ### Posts API
 ### List topic posts
-`GET /users/:username/repos/:repo_name/topics/:topic_number/posts/`
+`GET /users/:user_name/repos/:repo_name/topics/:topic_number/posts/`
 
 **Example:** http://api.ost.io/v1/users/paulmillr/repos/ostio/topics/1/posts/
 
 #### Create new post
-`POST /users/:username/repos/:repo_name/topics/:topic_number/posts/`
+`POST /users/:user_name/repos/:repo_name/topics/:topic_number/posts/`
 
 Input:
 
-* **text**: *Required* **string*
+* **text**: *Required* **string**
 
 #### Get post data
-`GET /users/:username/repos/:repo_name/topics/:topic_number/posts/:id`
+`GET /users/:user_name/repos/:repo_name/topics/:topic_number/posts/:id`
 
 **Example:** http://api.ost.io/v1/users/paulmillr/repos/ostio/topics/1/posts/8
 
 #### Modify post
-`PUT /users/:username/repos/:repo_name/topics/:topic_number/posts/:id`
+`PUT /users/:user_name/repos/:repo_name/topics/:topic_number/posts/:id`
 
 Input:
 
-* **text**: *Required* **string*
+* **text**: *Required* **string**
 
 #### Delete post
-`DELETE /users/:username/repos/:repo_name/topics/:topic_number/posts/:id`
+`DELETE /users/:user_name/repos/:repo_name/topics/:topic_number/posts/:id`
 
 ## License
 The MIT License (MIT)
