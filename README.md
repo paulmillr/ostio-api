@@ -28,10 +28,18 @@ Current API version is v1. You need to prepend `v1/` to app requests except auth
 * [Repos](#topics-api)
 * [Posts](#posts-api)
 
+### Enviroment variables
+Please take care of setting proper enviroment variables in order to make API
+working. **Hint:** You can use the `.env` file for that.
+
+OSTIO_ORIGIN='http://dev.ost.io'
+OSTIO_API_REDIRECT='http://dev.ost.io:3000/auth-callback'
+OSTIO_CLIENT_REDIRECT='http://dev.ost.io/auth-callback'
+GITHUB_APP_ID=''
+GITHUB_APP_SECRET=''
+
 ### Auth
 `/auth/github?origin=http://example.com/`
-
-
 
 When authenticated, ostio will redirect to your `origin` with params `login` and `accessToken`:
 `http://example.com?login=paulmillr&accessToken=af952810adbt`

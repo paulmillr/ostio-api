@@ -1,17 +1,12 @@
 require 'json'
 require 'bundler'
+require 'dotenv'
+Dotenv.load
 
 Bundler.require
 Dir['./lib/*'].each &method(:require)
 
-ENV['OSTIO-REDIRECT'] = 'http://ost.io/auth-callback'
-# ENV['GITHUB_APP_ID'] = 'bf9ef8754a144ad12198'
-# ENV['GITHUB_APP_SECRET'] = 'ef8367295a5ceddf68f7c2237cc9159e92525bf7'
-
 disable :show_exceptions
-
-# set :bind, '0.0.0.0'
-# set :port, 3000
 
 set :protection, except: :json_csrf
 set :database_file, 'db/config.yml'
@@ -43,8 +38,7 @@ after do
   headers({
     'Access-Control-Allow-Credentials' => 'true',
     'Access-Control-Allow-Methods' => 'GET, POST, PUT, DELETE',
-    'Access-Control-Allow-Origin' => 'http://ost.io',
-  # 'Access-Control-Allow-Origin' => '*',
+    'Access-Control-Allow-Origin' => ENV['OSTIO_ORIGIN'],
     'Access-Control-Max-Age' => '1728000'
   })
 
@@ -100,7 +94,7 @@ end
 
 get '/auth' do
   redirect to Octokit.authorize_url(ENV['GITHUB_APP_ID'], {
-    redirect_uri: "http://#{request.host}/auth-callback"
+    redirect_uri: ENV['OSTIO_API_REDIRECT']
   })
 end
 
@@ -125,7 +119,7 @@ get '/auth-callback' do
   user.sync_orgs!
   user.sync_repos!
 
-  redirect to ENV['OSTIO-REDIRECT'] +
+  redirect to ENV['OSTIO_CLIENT_REDIRECT'] +
     "?access_token=#{token}&login=#{user.login}"
 end
 
