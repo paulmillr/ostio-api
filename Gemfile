@@ -8,5 +8,7 @@ gem 'thin', '~> 1.6.4'
 gem 'sinatra', '~> 1.4.7'
 gem 'sinatra-activerecord', '~> 2.0.9'
 
+gem 'dotenv'
+
 # gem 'octokit', '~> 4.2.0'
 gem 'octokit', github: 'shvaikalesh/octokit.rb'
