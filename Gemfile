@@ -19,7 +19,7 @@ gem 'activerecord-import', '0.2.9'
 gem 'devise', '2.1.0'
 
 # Provides OAuth.
-gem 'omniauth', '1.1.0'
+gem 'omniauth', '1.4.2'
 gem 'omniauth-github', '1.0.1'
 
 # GitHub v3 API kit.
